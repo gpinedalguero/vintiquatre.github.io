@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <title>vint-i-quatre</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0a0e1a" />
+
+  <!-- iOS standalone app support -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="vint-i-quatre" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>vint-i-quatre</h1>
+    <p>Clica les peçes per veure els diferents plans :P</p>
+  </header>
+
+  <!-- Big centered progress (behind the canvas pieces) -->
+  <div id="center-progress">
+    <svg id="progress-ring" viewBox="0 0 220 220">
+      <circle class="ring-bg"   cx="110" cy="110" r="96"/>
+      <circle class="ring-fill" cx="110" cy="110" r="96" id="ring-fill"/>
+    </svg>
+    <div id="center-labels">
+      <span id="prog-pct">0%</span>
+      <span id="prog-sub">col·leccionat</span>
+    </div>
+    <button id="sorpresa-btn" class="hidden" onclick="window.open('https://drive.google.com/drive/folders/1oXPl31Hgy7DoNu0KPqgE0zEXCiMK0NXj?usp=sharing','_blank')">
+      ✦ sorpresa!!
+    </button>
+  </div>
+
+  <!-- Collection tab button -->
+  <button id="collection-btn">
+    <span id="collection-count">0</span> col·leccionat ›
+  </button>
+
+  <!-- Physics canvas -->
+  <div id="canvas-wrap">
+    <canvas id="world"></canvas>
+  </div>
+
+  <!-- Piece overlay -->
+  <div id="overlay" class="hidden">
+    <div id="overlay-card">
+      <button id="overlay-close">×</button>
+      <div id="domino-preview"></div>
+      <div id="overlay-info">
+        <h2 id="ov-name"></h2>
+        <p id="ov-desc"></p>
+        <label id="collect-label">
+          <input type="checkbox" id="collect-check" />
+          <span id="collect-text">Marca com a col·leccionat</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Collection panel (slide-in from right) -->
+  <div id="collection-panel" class="panel-hidden">
+    <div id="panel-header">
+      <h2>La meva col·lecció</h2>
+      <button id="panel-close">×</button>
+    </div>
+    <p id="panel-subtitle">Les peçes col·leccionades dels plans fets.</p>
+    <div id="panel-empty">Encara no hi ha peçes col·leccionades<br>Clica una peça i fes "check" per col·leccionar-la</div>
+    <div id="panel-grid"></div>
+  </div>
+  <div id="panel-backdrop" class="panel-hidden"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
